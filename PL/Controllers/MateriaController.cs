@@ -20,9 +20,30 @@ namespace PL.Controllers
             }
             else
             {
-                ViewBag.Message = "Ocurrió un error al obtener la información" + result.ErrorMessage;
-                return PartialView("ValidationModal");
+                
+                return View(materia);
             }
+        }
+        [HttpGet]
+        public ActionResult Form()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Form(ML.Materia materia)
+        {
+            ML.Result result = BL.Materia.Add(materia);
+            if (result.Correct)
+            {
+                ViewBag.Message = "Se registro correctamente la materia";
+                return PartialView("Modal");
+            }
+            else
+            {
+                ViewBag.Message = "Ocurrio un error al insertar la materia" + result.ErrorMessage;
+                return PartialView("Modal");
+            }
+            
         }
     }
 }
